@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<robot>
+  <arms>
+    <left>
+      <elbow>1</elbow>
+      <wrist>3</wrist>
+    </left>
+    <right>
+      <elbow>1</elbow>
+      <wrist>3</wrist>
+    </right>
+  </arms>
+  <head>
+    <rotation>3</rotation>
+    <inclination>2</inclination>
+  </head>
+</robot>
