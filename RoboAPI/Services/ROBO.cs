@@ -8,14 +8,41 @@ namespace RoboAPI.Services
 {
     public class ROBO
     {
-        Arms leftArm = new Arms();
-        Arms rightArm = new Arms();
-        Head head = new Head();
+        private Arms leftArm = new Arms();
+        private Arms rightArm = new Arms();
+        private Head head = new Head();
 
-        public void main()
+        public Dictionary<string, int> LeftArm
         {
-            // head.setRotation(4);
+            get
+            {
+                var output = new Dictionary<string, int>();
+                output.Add("Elbow", this.leftArm.Elbow);
+                output.Add("Wrist", this.leftArm.Wrist);
+                return output;
+            }
         }
-        
+
+        public Dictionary<string, int> RightArm
+        {
+            get
+            {
+                var output = new Dictionary<string, int>();
+                output.Add("Elbow", this.rightArm.Elbow);
+                output.Add("Wrist", this.rightArm.Wrist);
+                return output;
+            }
+        }
+
+        public Dictionary<string, int> Head
+        {
+            get
+            {
+                var output = new Dictionary<string, int>();
+                output.Add("Rotation", this.head.Rotation);
+                output.Add("Inclination", this.head.Inclination);
+                return output;
+            }
+        }
     }
 }
