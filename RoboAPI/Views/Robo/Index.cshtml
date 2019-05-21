@@ -1,0 +1,28 @@
+﻿
+@model RoboAPI.Services.ROBOService
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Robo</h2>
+
+<div>
+    <ul>
+        <li>
+            <h3>Head</h3>
+            <p>rotation: @Model.HeadRotation</p>
+            <p>inclination: @Model.HeadInclination</p>
+        </li>
+        <li>
+            <h3>Left Arm</h3>
+            <p>Elbow: @Model.LeftArmElbow</p>
+            <p>Wrist: @Model.LeftArmWrist</p>
+        </li>
+        <li>
+            <h3>Right Arm</h3>
+            <p>Elbow: @Model.RightArmElbow</p>
+            <p>Wrist: @Model.RightArmWrist</p>
+        </li>
+    </ul>
+</div>

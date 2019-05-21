@@ -9,13 +9,17 @@ namespace RoboAPI.Models
 {
     public class Arms
     {
-        private int elbow = 3;
-        private int wrist = 2;
+        public int Elbow { get; set; }
+        public int Wrist { get; set; }
+        public string Side { get; set; }
         private Dictionary<int, string> elbowStates = new Dictionary<int, string>();
         private Dictionary<int, string> wristStates = new Dictionary<int, string>();
 
-        public Arms()
+        public Arms(string side, int elbow, int wrist)
         {
+            this.Side = side;
+            this.Elbow = elbow;
+            this.Wrist = wrist;
             string states_path = Path.GetFullPath(
                 Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, "./Models/RoboStates.xml")
             );
@@ -28,55 +32,6 @@ namespace RoboAPI.Models
             {
                 wristStates.Add(Int32.Parse(level1Element.Attribute("position").Value), level1Element.Value);
             }
-        }
-
-        public int Elbow
-        {
-            get
-            {
-                return this.elbow;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.elbow))
-                {
-                    this.elbow = value;
-                }
-                else
-                {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.elbow, value));
-                }
-            }
-        }
-
-        public int Wrist
-        {
-            get
-            {
-                return this.wrist;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.wrist) && this.elbow == 4)
-                {
-                    this.wrist = value;
-                }
-                else
-                {
-                    if(this.elbow == 4)
-                    {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.wrist, value));
-                    } else
-                    {
-                        throw new Exception("Cannot move wrist unless wrist is 4 - 'Fortemente Contraído'");
-                    }
-                }
-            }
-        }
-
-        private bool isMovementValid(int var, int attribute)
-        {
-            return var - attribute > 1 || attribute - var > 1;
         }
     }
 }

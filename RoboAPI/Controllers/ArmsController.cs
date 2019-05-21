@@ -29,15 +29,15 @@ namespace RoboAPI.Controllers
             {
                 if (value.Side == "left")
                 {
-                    this.robo_service.LeftArm.Elbow = value.Elbow;
-                    this.robo_service.LeftArm.Wrist = value.Wrist;
+                    this.robo_service.LeftArmElbow = value.Elbow;
+                    this.robo_service.LeftArmWrist = value.Wrist;
                     return Ok();
                 }
 
                 if (value.Side == "right")
                 {
-                    this.robo_service.RightArm.Elbow = value.Elbow;
-                    this.robo_service.RightArm.Wrist = value.Wrist;
+                    this.robo_service.RightArmElbow = value.Elbow;
+                    this.robo_service.RightArmWrist = value.Wrist;
                     return Ok();
                 }
                 return NotFound();

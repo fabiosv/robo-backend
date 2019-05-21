@@ -9,8 +9,8 @@ namespace RoboAPI.Models
 {
     public class Head
     {
-        private int rotation = 3;
-        private int inclination = 2;
+        public int Rotation { get; set; }
+        public int Inclination { get; set; }
         private Dictionary<int, string> rotationStates = new Dictionary<int, string>();
         private Dictionary<int, string> inclinationStates = new Dictionary<int, string>();
 
@@ -30,51 +30,16 @@ namespace RoboAPI.Models
             }
         }
 
-        public int Inclination
+        public Head(int rotation, int inclination)
         {
-            get
-            {
-                return this.inclination;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.inclination))
-                {
-                    this.inclination = value;
-                } else
-                {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.inclination, value));
-                }
-            }
-        }
-
-        public int Rotation
-        {
-            get
-            {
-                return this.rotation;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.rotation) && this.inclination < 3)
-                {
-                    this.rotation = value;
-                }
-                else
-                {
-                    if(this.inclination == 3)
-                    {
-                        throw new Exception("Cannot rotate head because inclination is 3 - 'Para Baixo'");
-                    } else {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.rotation, value));
-                    }
-                }
-            }
+            this.Inclination = inclination;
+            this.Rotation = rotation;
         }
 
         private bool isMovementValid(int var, int attribute)
         {
-            return var - attribute > 1 || attribute - var > 1;
+            System.Console.WriteLine(var - attribute);
+            return var - attribute == 1 || attribute - var == 1 || attribute - var == 0;
         }
     }
 }

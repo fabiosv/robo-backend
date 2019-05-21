@@ -13,6 +13,9 @@ namespace RoboAPI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapMvcAttributeRoutes();
+            // https://youtu.be/E7Voso411Vs?t=2744
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
