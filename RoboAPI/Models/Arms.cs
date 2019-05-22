@@ -4,18 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Xml.Linq;
 using System.IO;
+using System.ComponentModel;
 
 namespace RoboAPI.Models
 {
     public class Arms
     {
-        private int elbow = 3;
-        private int wrist = 2;
+        public int Elbow { get; set; }
+        public int Wrist { get; set; }
+        public string Side { get; set; }
         private Dictionary<int, string> elbowStates = new Dictionary<int, string>();
         private Dictionary<int, string> wristStates = new Dictionary<int, string>();
 
-        public Arms()
+        public Arms(string side, int elbow, int wrist)
         {
+            this.Side = side;
+            this.Elbow = elbow;
+            this.Wrist = wrist;
             string states_path = Path.GetFullPath(
                 Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, "./Models/RoboStates.xml")
             );
@@ -30,53 +35,22 @@ namespace RoboAPI.Models
             }
         }
 
-        public int Elbow
+        public string ElbowToString()
         {
-            get
-            {
-                return this.elbow;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.elbow))
-                {
-                    this.elbow = value;
-                }
-                else
-                {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.elbow, value));
-                }
-            }
+            return this.elbowStates[this.Elbow];
+        }
+        public string WristToString()
+        {
+            return this.wristStates[this.Wrist];
         }
 
-        public int Wrist
+        public int MaxElbowValue()
         {
-            get
-            {
-                return this.wrist;
-            }
-            set
-            {
-                if (this.isMovementValid(value, this.wrist) && this.elbow == 4)
-                {
-                    this.wrist = value;
-                }
-                else
-                {
-                    if(this.elbow == 4)
-                    {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.wrist, value));
-                    } else
-                    {
-                        throw new Exception("Cannot move wrist unless wrist is 4 - 'Fortemente Contraído'");
-                    }
-                }
-            }
+            return this.elbowStates.Count;
         }
-
-        private bool isMovementValid(int var, int attribute)
+        public int MaxWristValue()
         {
-            return var - attribute > 1 || attribute - var > 1;
+            return this.wristStates.Count;
         }
     }
 }
