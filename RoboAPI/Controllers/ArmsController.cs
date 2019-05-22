@@ -14,12 +14,9 @@ namespace RoboAPI.Controllers
         private ROBOService robo_service = ROBOService.Instance;
 
         // GET: api/Arms
-        public Dictionary<string,Dictionary<string,int>> Get()
+        public IEnumerable<Models.Arms> Get()
         {
-            Dictionary<string, Dictionary<string, int>> robo = new Dictionary<string, Dictionary<string, int>>();
-            robo.Add("LeftArm", robo_service.DictLeftArm());
-            robo.Add("RightArm", robo_service.DictRightArm());
-            return robo;
+            return new Models.Arms[] { this.robo_service.LeftArm, this.robo_service.RightArm };
         }
 
         // PUT: api/Arms/left|right
@@ -29,15 +26,13 @@ namespace RoboAPI.Controllers
             {
                 if (value.Side == "left")
                 {
-                    this.robo_service.LeftArmElbow = value.Elbow;
-                    this.robo_service.LeftArmWrist = value.Wrist;
+                    this.robo_service.LeftArm = value;
                     return Ok();
                 }
 
                 if (value.Side == "right")
                 {
-                    this.robo_service.RightArmElbow = value.Elbow;
-                    this.robo_service.RightArmWrist = value.Wrist;
+                    this.robo_service.RightArm = value;
                     return Ok();
                 }
                 return NotFound();

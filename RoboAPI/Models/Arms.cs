@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Linq;
 using System.IO;
+using System.ComponentModel;
 
 namespace RoboAPI.Models
 {
@@ -32,6 +33,24 @@ namespace RoboAPI.Models
             {
                 wristStates.Add(Int32.Parse(level1Element.Attribute("position").Value), level1Element.Value);
             }
+        }
+
+        public string ElbowToString()
+        {
+            return this.elbowStates[this.Elbow];
+        }
+        public string WristToString()
+        {
+            return this.wristStates[this.Wrist];
+        }
+
+        public int MaxElbowValue()
+        {
+            return this.elbowStates.Count;
+        }
+        public int MaxWristValue()
+        {
+            return this.wristStates.Count;
         }
     }
 }

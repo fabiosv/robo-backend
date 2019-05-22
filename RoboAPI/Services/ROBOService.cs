@@ -10,9 +10,9 @@ namespace RoboAPI.Services
     public class ROBOService
     {
         static ROBOService _instance;
-        private Arms LeftArm = new Arms(side: "left", elbow: 3, wrist: 2);
-        private Arms RightArm = new Arms(side: "right", elbow: 3, wrist: 2);
-        private Head Head = new Head(rotation: 3, inclination: 2);
+        private Arms leftArm = new Arms(side: "left", elbow: 1, wrist: 3);
+        private Arms rightArm = new Arms(side: "right", elbow: 1, wrist: 3);
+        private Head head = new Head(rotation: 3, inclination: 2);
 
         // Singleton
         public static ROBOService Instance
@@ -20,17 +20,18 @@ namespace RoboAPI.Services
             get { return _instance ?? (_instance = new ROBOService()); }
         }
 
-        public int HeadRotation
+        public Head Head
         {
             get
             {
-                return this.Head.Rotation;
+                return this.head;
             }
             set
             {
                 try
                 {
-                    this.Head.Rotation = HeadRules.RotationRules(value, this.Head);
+                    this.head.Inclination = HeadRules.InclinationRules(value.Inclination, this.head);
+                    this.head.Rotation = HeadRules.RotationRules(value.Rotation, this.head);
                 }
                 catch (Exception e)
                 {
@@ -39,55 +40,18 @@ namespace RoboAPI.Services
             }
         }
 
-        public int HeadInclination
+        public Arms LeftArm
         {
             get
             {
-                return this.Head.Inclination;
+                return this.leftArm;
             }
             set
             {
                 try
                 {
-                    this.Head.Inclination = HeadRules.InclinationRules(value, this.Head);
-                }
-                catch (Exception e)
-                {
-                    throw e;
-                }
-            }
-        }
-            
-
-        public int LeftArmElbow
-        {
-            get
-            {
-                return this.LeftArm.Elbow;
-            }
-            set
-            {
-                try
-                {
-                    this.LeftArm.Elbow = ArmRules.ElbowRules(value, this.LeftArm);
-                } catch(Exception e)
-                {
-                    throw e;
-                }
-            }
-        }
-
-        public int LeftArmWrist
-        {
-            get
-            {
-                return this.LeftArm.Wrist;
-            }
-            set
-            {
-                try
-                {
-                    this.LeftArm.Wrist = ArmRules.WristRules(value, this.LeftArm);
+                    this.leftArm.Elbow = ArmRules.ElbowRules(value.Elbow, this.leftArm);
+                    this.leftArm.Wrist = ArmRules.ElbowRules(value.Wrist, this.leftArm);
                 }
                 catch (Exception e)
                 {
@@ -96,37 +60,20 @@ namespace RoboAPI.Services
             }
         }
 
-        public int RightArmElbow
+        public Arms RightArm
         {
             get
             {
-                return this.RightArm.Elbow;
+                return this.rightArm;
             }
             set
             {
                 try
                 {
-                    this.LeftArm.Elbow = ArmRules.ElbowRules(value, this.RightArm);
+                    this.rightArm.Elbow = ArmRules.ElbowRules(value.Elbow, this.rightArm);
+                    this.rightArm.Wrist = ArmRules.ElbowRules(value.Wrist, this.rightArm);
                 }
                 catch (Exception e)
-                {
-                    throw e;
-                }
-            }
-        }
-
-        public int RightArmWrist
-        {
-            get
-            {
-                return this.RightArm.Wrist;
-            }
-            set
-            {
-                try
-                {
-                    this.RightArm.Wrist = ArmRules.WristRules(value, this.RightArm);
-                } catch(Exception e)
                 {
                     throw e;
                 }
@@ -136,24 +83,24 @@ namespace RoboAPI.Services
         public Dictionary<string, int> DictLeftArm()
         {
             Dictionary<string, int> output = new Dictionary<string, int>();
-            output.Add("Elbow", this.LeftArm.Elbow);
-            output.Add("Wrist", this.LeftArm.Wrist);
+            output.Add("Elbow", this.leftArm.Elbow);
+            output.Add("Wrist", this.leftArm.Wrist);
             return output;
         }
 
         public Dictionary<string, int> DictRightArm()
         {
             Dictionary<string, int> output = new Dictionary<string, int>();
-            output.Add("Elbow", this.RightArm.Elbow);
-            output.Add("Wrist", this.RightArm.Wrist);
+            output.Add("Elbow", this.rightArm.Elbow);
+            output.Add("Wrist", this.rightArm.Wrist);
             return output;
         }
 
         public Dictionary<string, int> DictHead()
         {
             Dictionary<string, int> output = new Dictionary<string, int>();
-            output.Add("Rotation", this.Head.Rotation);
-            output.Add("Inclination", this.Head.Inclination);
+            output.Add("Rotation", this.head.Rotation);
+            output.Add("Inclination", this.head.Inclination);
             return output;
         } 
     }

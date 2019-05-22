@@ -16,5 +16,11 @@ namespace RoboAPI.Services.Rules
         {
             return var - attribute == 1 || attribute - var == 1 || attribute - var == 0;
         }
+
+        public static bool IsValueUnderBorders(int value, int max)
+        {
+            int min = 1;
+            return value <= max && value >= min;
+        }
     }
 }

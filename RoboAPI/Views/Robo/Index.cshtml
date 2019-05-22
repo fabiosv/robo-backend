@@ -7,28 +7,28 @@
 
 <h2>Robo</h2>
 
-<div>
+<div class="jumbotron">
     <ul>
         <li>
             <h3>Head</h3>
-            <p>rotation: @Model.HeadRotation</p>
-            <p>inclination: @Model.HeadInclination</p>
+            <p>rotation: @Model.Head.Rotation - @Model.Head.RotationToString()</p>
+            <p>inclination: @Model.Head.Inclination - @Model.Head.InclinationToString()</p>
         </li>
         <li>
             <h3>Left Arm</h3>
-            <p>Elbow: @Model.LeftArmElbow</p>
-            <p>Wrist: @Model.LeftArmWrist</p>
+            <p>Elbow: @Model.LeftArm.Elbow - @Model.LeftArm.ElbowToString()</p>
+            <p>Wrist: @Model.LeftArm.Wrist - @Model.LeftArm.WristToString()</p>
         </li>
         <li>
             <h3>Right Arm</h3>
-            <p>Elbow: @Model.RightArmElbow</p>
-            <p>Wrist: @Model.RightArmWrist</p>
+            <p>Elbow: @Model.RightArm.Elbow - @Model.RightArm.ElbowToString()</p>
+            <p>Wrist: @Model.RightArm.Wrist - @Model.RightArm.WristToString()</p>
         </li>
     </ul>
 </div>
-<div>
+<div class="row">
     <h2>Update Robo</h2>
-    <div>
+    <div class="jumbotron">
         <label for="formBody">Body Part</label>
         <select id="formBody">
             <option value="default">Choose one part</option>
@@ -36,23 +36,23 @@
             <option value="formLeftArm">Left Arm</option>
             <option value="formRightArm">Right Arm</option>
         </select>
-        <div id="formHead" style="display:none">
+        <div id="formHead" class="row" style="display:none">
             <label>Rotation</label>
-            <input id="rotation" placeholder="Rotation" value="@Model.HeadRotation" type="number" min="1" max="5" />
+            <input id="rotation" placeholder="Rotation" value="@Model.Head.Rotation" type="number" min="1" max="5" />
             <label>Inclination</label>
-            <input id="inclination" placeholder="Inclination" value="@Model.HeadInclination" type="number" min="1" max="3" />
+            <input id="inclination" placeholder="Inclination" value="@Model.Head.Inclination" type="number" min="1" max="3" />
         </div>
-        <div id="formLeftArm" style="display:none">
+        <div id="formLeftArm" class="row" style="display:none">
             <label>Elbow</label>
-            <input id="LeftElbow" placeholder="Elbow" value="@Model.LeftArmElbow" type="number" min="1" max="4" />
+            <input id="LeftElbow" placeholder="Elbow" value="@Model.LeftArm.Elbow" type="number" min="1" max="4" />
             <label>Wrist</label>
-            <input id="LeftWrist" placeholder="Wrist" value="@Model.LeftArmWrist" type="number" min="1" max="7" />
+            <input id="LeftWrist" placeholder="Wrist" value="@Model.LeftArm.Wrist" type="number" min="1" max="7" />
         </div>
-        <div id="formRightArm" style="display:none">
+        <div id="formRightArm" class="row" style="display:none">
             <label>Elbow</label>
-            <input id="RightElbow" placeholder="Elbow" value="@Model.RightArmElbow" type="number" min="1" max="4" />
+            <input id="RightElbow" placeholder="Elbow" value="@Model.RightArm.Elbow" type="number" min="1" max="4" />
             <label>Wrist</label>
-            <input id="RightWrist" placeholder="Wrist" value="@Model.RightArmWrist" type="number" min="1" max="7" />
+            <input id="RightWrist" placeholder="Wrist" value="@Model.RightArm.Wrist" type="number" min="1" max="7" />
         </div>
         <button id="submit">Submit</button>
         <b id="error-message" style="color:red;"></b>

@@ -13,11 +13,9 @@ namespace RoboAPI.Controllers
         private ROBOService robo_service = ROBOService.Instance;
 
         // GET: api/Head
-        public Dictionary<string, Dictionary<string, int>> Get()
+        public Models.Head Get()
         {
-            Dictionary<string, Dictionary<string, int>> robo = new Dictionary<string, Dictionary<string, int>>();
-            robo.Add("Head", robo_service.DictHead());
-            return robo;
+            return robo_service.Head;
         }
 
         // PUT: api/Head/
@@ -25,8 +23,7 @@ namespace RoboAPI.Controllers
         {
             try
             {
-                this.robo_service.HeadRotation = value.Rotation;
-                this.robo_service.HeadInclination = value.Inclination;
+                this.robo_service.Head = value;
                 return Ok();
             }
             catch(Exception e)
