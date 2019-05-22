@@ -51,7 +51,7 @@ namespace RoboAPI.Services
                 try
                 {
                     this.leftArm.Elbow = ArmRules.ElbowRules(value.Elbow, this.leftArm);
-                    this.leftArm.Wrist = ArmRules.ElbowRules(value.Wrist, this.leftArm);
+                    this.leftArm.Wrist = ArmRules.WristRules(value.Wrist, this.leftArm);
                 }
                 catch (Exception e)
                 {
@@ -71,7 +71,7 @@ namespace RoboAPI.Services
                 try
                 {
                     this.rightArm.Elbow = ArmRules.ElbowRules(value.Elbow, this.rightArm);
-                    this.rightArm.Wrist = ArmRules.ElbowRules(value.Wrist, this.rightArm);
+                    this.rightArm.Wrist = ArmRules.WristRules(value.Wrist, this.rightArm);
                 }
                 catch (Exception e)
                 {

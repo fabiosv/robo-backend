@@ -74,22 +74,22 @@
                 let selectedOption = $("#formBody option:selected").val();
                 if (selectedOption === "formLeftArm") {
                     submit("/api/Arms", JSON.stringify({
-                        side: "left",
-                        elbow: document.getElementById("LeftElbow").value * 1,
-                        wrist: document.getElementById("LeftWrist").value * 1,
+                        Side: "left",
+                        Elbow: document.getElementById("LeftElbow").value * 1,
+                        Wrist: document.getElementById("LeftWrist").value * 1,
                     }));
                 }
                 if (selectedOption === "formRightArm") {
                     submit("/api/Arms", JSON.stringify({
-                        side: "right",
-                        elbow: document.getElementById("RightElbow").value * 1,
-                        wrist: document.getElementById("RightWrist").value * 1,
+                        Side: "right",
+                        Elbow: document.getElementById("RightElbow").value * 1,
+                        Wrist: document.getElementById("RightWrist").value * 1,
                     }));
                 }
                 if (selectedOption === "formHead") {
                     submit("/api/Head", JSON.stringify({
-                        rotation: document.getElementById("rotation").value * 1,
-                        inclination: document.getElementById("inclination").value * 1,
+                        Rotation: document.getElementById("rotation").value * 1,
+                        Inclination: document.getElementById("inclination").value * 1,
                     }));
                 }
             });
