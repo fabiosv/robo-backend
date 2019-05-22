@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using RoboAPI.Models;
+using RoboAPI.Services.Rules;
 
 namespace RoboAPI.Services
 {
@@ -27,20 +28,13 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.Head.Rotation) && this.Head.Inclination < 3)
+                try
                 {
-                    this.Head.Rotation = value;
+                    this.Head.Rotation = HeadRules.RotationRules(value, this.Head);
                 }
-                else
+                catch (Exception e)
                 {
-                    if (this.Head.Inclination == 3)
-                    {
-                        throw new Exception("Cannot rotate head because inclination is 3 - 'Para Baixo'");
-                    }
-                    else
-                    {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.Head.Rotation, value));
-                    }
+                    throw e;
                 }
             }
         }
@@ -53,13 +47,13 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.Head.Inclination))
+                try
                 {
-                    this.Head.Inclination = value;
+                    this.Head.Inclination = HeadRules.InclinationRules(value, this.Head);
                 }
-                else
+                catch (Exception e)
                 {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.Head.Inclination, value));
+                    throw e;
                 }
             }
         }
@@ -73,13 +67,12 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.LeftArm.Elbow))
+                try
                 {
-                    this.LeftArm.Elbow = value;
-                }
-                else
+                    this.LeftArm.Elbow = ArmRules.ElbowRules(value, this.LeftArm);
+                } catch(Exception e)
                 {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.LeftArm.Elbow, value));
+                    throw e;
                 }
             }
         }
@@ -92,20 +85,13 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.LeftArm.Wrist) && this.LeftArm.Elbow == 4)
+                try
                 {
-                    this.LeftArm.Wrist = value;
+                    this.LeftArm.Wrist = ArmRules.WristRules(value, this.LeftArm);
                 }
-                else
+                catch (Exception e)
                 {
-                    if (this.LeftArm.Elbow == 4)
-                    {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.LeftArm.Wrist, value));
-                    }
-                    else
-                    {
-                        throw new Exception("Cannot move wrist unless wrist is 4 - 'Fortemente Contraído'");
-                    }
+                    throw e;
                 }
             }
         }
@@ -118,13 +104,13 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.RightArm.Elbow))
+                try
                 {
-                    this.LeftArm.Elbow = value;
+                    this.LeftArm.Elbow = ArmRules.ElbowRules(value, this.RightArm);
                 }
-                else
+                catch (Exception e)
                 {
-                    throw new Exception(string.Format("Cannot jump from {0} to {1}", this.RightArm.Elbow, value));
+                    throw e;
                 }
             }
         }
@@ -137,30 +123,15 @@ namespace RoboAPI.Services
             }
             set
             {
-                if (this.isMovementValid(value, this.RightArm.Wrist) && this.RightArm.Elbow == 4)
+                try
                 {
-                    this.RightArm.Wrist = value;
-                }
-                else
+                    this.RightArm.Wrist = ArmRules.WristRules(value, this.RightArm);
+                } catch(Exception e)
                 {
-                    if (this.RightArm.Elbow == 4)
-                    {
-                        throw new Exception(string.Format("Cannot jump from {0} to {1}", this.RightArm.Wrist, value));
-                    }
-                    else
-                    {
-                        throw new Exception("Cannot move wrist unless wrist is 4 - 'Fortemente Contraído'");
-                    }
+                    throw e;
                 }
             }
         }
-
-        private bool isMovementValid(int var, int attribute)
-        {
-            System.Console.WriteLine(var - attribute);
-            return var - attribute == 1 || attribute - var == 1 || attribute - var == 0;
-        }
-
 
         public Dictionary<string, int> DictLeftArm()
         {

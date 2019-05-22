@@ -26,3 +26,87 @@
         </li>
     </ul>
 </div>
+<div>
+    <h2>Update Robo</h2>
+    <div>
+        <label for="formBody">Body Part</label>
+        <select id="formBody">
+            <option value="default">Choose one part</option>
+            <option value="formHead">Head</option>
+            <option value="formLeftArm">Left Arm</option>
+            <option value="formRightArm">Right Arm</option>
+        </select>
+        <div id="formHead" style="display:none">
+            <label>Rotation</label>
+            <input id="rotation" placeholder="Rotation" value="@Model.HeadRotation" type="number" min="1" max="5" />
+            <label>Inclination</label>
+            <input id="inclination" placeholder="Inclination" value="@Model.HeadInclination" type="number" min="1" max="3" />
+        </div>
+        <div id="formLeftArm" style="display:none">
+            <label>Elbow</label>
+            <input id="LeftElbow" placeholder="Elbow" value="@Model.LeftArmElbow" type="number" min="1" max="4" />
+            <label>Wrist</label>
+            <input id="LeftWrist" placeholder="Wrist" value="@Model.LeftArmWrist" type="number" min="1" max="7" />
+        </div>
+        <div id="formRightArm" style="display:none">
+            <label>Elbow</label>
+            <input id="RightElbow" placeholder="Elbow" value="@Model.RightArmElbow" type="number" min="1" max="4" />
+            <label>Wrist</label>
+            <input id="RightWrist" placeholder="Wrist" value="@Model.RightArmWrist" type="number" min="1" max="7" />
+        </div>
+        <button id="submit">Submit</button>
+        <b id="error-message" style="color:red;"></b>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formBody").change(function (e) {
+                //e.target.nodeValue
+                const forms = ["formHead", "formLeftArm", "formRightArm"];
+                let selectedOption = $("#formBody option:selected").val();
+                document.getElementById(selectedOption).style.display = "block";
+                forms.filter((f) => f !== selectedOption).forEach((f) => {
+                    document.getElementById(f).style.display = "none";
+                });
+            })
+            $("#submit").click(function (e) {
+                let selectedOption = $("#formBody option:selected").val();
+                if (selectedOption === "formLeftArm") {
+                    submit("/api/Arms", JSON.stringify({
+                        side: "left",
+                        elbow: document.getElementById("LeftElbow").value * 1,
+                        wrist: document.getElementById("LeftWrist").value * 1,
+                    }));
+                }
+                if (selectedOption === "formRightArm") {
+                    submit("/api/Arms", JSON.stringify({
+                        side: "right",
+                        elbow: document.getElementById("RightElbow").value * 1,
+                        wrist: document.getElementById("RightWrist").value * 1,
+                    }));
+                }
+                if (selectedOption === "formHead") {
+                    submit("/api/Head", JSON.stringify({
+                        rotation: document.getElementById("rotation").value * 1,
+                        inclination: document.getElementById("inclination").value * 1,
+                    }));
+                }
+            });
+
+            function submit(api, content) {
+                $.ajax({
+                    url: api,
+                    type: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    data: content
+                }).done(function () {
+                    document.location.reload();
+                }).fail(function (msg) {
+                    console.log(msg.responseJSON.ExceptionMessage);
+                    document.getElementById("error-message").innerText = `*${msg.responseJSON.ExceptionMessage}`;
+                })
+            }
+        });
+    </script>
+}
